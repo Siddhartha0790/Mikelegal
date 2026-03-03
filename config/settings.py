@@ -5,22 +5,19 @@ django settings
 from pathlib import Path
 from decouple import config
 
-# build paths
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# dev settings
-
-# keep secret
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-default-key')
 
-# dont run
+
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = []
 
 
-# app definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -103,17 +100,16 @@ USE_I18N = True
 USE_TZ = True
 
 
-# static files
+
 
 STATIC_URL = 'static/'
 
-# pk field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-# drf settings
+
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 100,
