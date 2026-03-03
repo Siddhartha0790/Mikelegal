@@ -1,0 +1,17 @@
+{% extends "email/base.html" %}
+
+{% block content %}
+    <p>Hi {{ first_name }},</p>
+    
+    <p><em>{{ preview_text }}</em></p>
+    
+    <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+    
+    <div style="margin: 20px 0;">
+        {{ html_content|safe }}
+    </div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{{ article_url }}" class="button">Read Full Article</a>
+    </div>
+{% endblock %}
