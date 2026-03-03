@@ -42,6 +42,7 @@ python manage.py runserver
 
 ### sending campaigns
 run the management command to simulate sending out emails scheduled for today. the output will be printed directly to the console instead of sending real emails.
+you can also use the `--workers` flag to specify how many concurrent workers should be used (default is 10).
 ```bash
-python manage.py send_daily_campaign
+python manage.py send_daily_campaign --workers 10
 ```

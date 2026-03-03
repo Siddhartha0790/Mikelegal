@@ -9,7 +9,16 @@ logger = logging.getLogger(__name__)
 class Command(BaseCommand):
     help = 'Dispatches daily email campaigns using parallel processing.'
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--workers',
+            type=int,
+            default=10,
+            help='Number of concurrent workers for dispatching campaigns',
+        )
+
     def handle(self, *args, **options):
+        workers = options['workers']
         # fetch campaigns
         today = timezone.now().date()
         
@@ -22,7 +31,7 @@ class Command(BaseCommand):
             
         self.stdout.write(self.style.SUCCESS(f"Found {campaigns.count()} campaigns scheduled for today."))
         
-        dispatcher = CampaignDispatcher(max_workers=10)
+        dispatcher = CampaignDispatcher(max_workers=workers)
         
         for campaign in campaigns:
             self.stdout.write(f"Starting dispatch for campaign: {campaign.subject}")
