@@ -8,20 +8,18 @@ logger = logging.getLogger(__name__)
 
 class CampaignDispatcher:
     def __init__(self, max_workers=10):
-        # We use a ThreadPoolExecutor for lightweight IO bound tasks (sending emails over SMTP)
+        # thread pool
         self.max_workers = max_workers
 
     def _process_subscriber(self, subscriber, campaign):
         """
-        Worker function to send an email to a single subscriber and log the result.
+        process subscriber
         """
         success, error_msg = send_email(subscriber, campaign)
         
         status = 'SENT' if success else 'FAILED'
         
-        # Log the result
-        # Note: In a heavily concurrent environment, writing to DB sequentially in threads 
-        # is usually fine for a reasonable number of threads, but batch insertion could be optimized further.
+        # log result
         CampaignLog.objects.create(
             campaign=campaign,
             subscriber=subscriber,
@@ -34,11 +32,9 @@ class CampaignDispatcher:
 
     def dispatch(self, campaign):
         """
-        Dispatches a campaign to all active subscribers using a threadpool for parallel execution.
+        dispatch campaign
         """
-        # Fetch active subscribers. 
-        # Memory optimization: using iterator() if the list is huge, 
-        # but list() is okay here to feed into thread pool.
+        # fetch subscribers
         subscribers = list(Subscriber.objects.filter(is_active=True))
         
         if not subscribers:
@@ -51,13 +47,13 @@ class CampaignDispatcher:
         logger.info(f"Dispatching campaign {campaign.id} to {len(subscribers)} subscribers using {self.max_workers} workers.")
 
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-            # Submit tasks to the thread pool
+            # submit tasks
             future_to_subscriber = {
                 executor.submit(self._process_subscriber, sub, campaign): sub 
                 for sub in subscribers
             }
             
-            # Wait for the results
+            # wait results
             for future in as_completed(future_to_subscriber):
                 subscriber = future_to_subscriber[future]
                 try:
@@ -70,7 +66,7 @@ class CampaignDispatcher:
                     logger.error(f"Worker generated an exception for {subscriber.email}: {exc}")
                     failed_count += 1
                     
-                    # Ensure log is created even if thread crashes unexpectedly
+                    # ensure log
                     CampaignLog.objects.create(
                         campaign=campaign,
                         subscriber=subscriber,

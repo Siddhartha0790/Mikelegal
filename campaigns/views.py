@@ -7,8 +7,7 @@ from .serializers import SubscriberSerializer
 
 class SubscriberListCreateView(generics.ListCreateAPIView):
     """
-    GET /api/subscribers/ - List total active subscribers
-    POST /api/subscribers/ - Add new subscriber
+    manage subscribers
     """
     serializer_class = SubscriberSerializer
 
@@ -17,7 +16,7 @@ class SubscriberListCreateView(generics.ListCreateAPIView):
 
 class UnsubscribeView(APIView):
     """
-    POST /api/unsubscribe/ - Accept email and deactivate subscriber
+    deactivate subscriber
     """
     def post(self, request, *args, **kwargs):
         email = request.data.get('email')

@@ -5,7 +5,7 @@ BASE_URL = "http://localhost:8000/api"
 
 def unsubscribe(email):
     """
-    Deactivates a subscriber based on their email.
+    deactivate subscriber
     """
     url = f"{BASE_URL}/unsubscribe/"
     payload = {
@@ -22,7 +22,7 @@ def unsubscribe(email):
         print("Error: Could not connect to the server. Make sure it is running on http://localhost:8000")
 
 if __name__ == "__main__":
-    # You can pass the email to unsubscribe from the terminal or it defaults to this
+    # default email
     email = sys.argv[1] if len(sys.argv) > 1 else "john.doe@example.com"
     
     unsubscribe(email)

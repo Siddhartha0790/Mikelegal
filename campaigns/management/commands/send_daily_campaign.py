@@ -10,12 +10,10 @@ class Command(BaseCommand):
     help = 'Dispatches daily email campaigns using parallel processing.'
 
     def handle(self, *args, **options):
-        # Fetch campaigns where published_date is today
-        # Note: timezone.now().date() represents the current date
+        # fetch campaigns
         today = timezone.now().date()
         
-        # We find campaigns whose published_date matches today's date
-        # using __date lookup
+        # match date
         campaigns = Campaign.objects.filter(published_date__date=today)
         
         if not campaigns.exists():

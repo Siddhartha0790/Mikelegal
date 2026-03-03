@@ -5,7 +5,7 @@ BASE_URL = "http://localhost:8000/api"
 
 def add_subscriber(email, first_name):
     """
-    Adds a new subscriber to the database.
+    add subscriber
     """
     url = f"{BASE_URL}/subscribers/"
     payload = {
@@ -23,7 +23,7 @@ def add_subscriber(email, first_name):
         print("Error: Could not connect to the server. Make sure it is running on http://localhost:8000")
 
 if __name__ == "__main__":
-    # You can pass arguments from the terminal or it will use these defaults
+    # default args
     email = sys.argv[1] if len(sys.argv) > 1 else "b123130@iiit-bh.ac.in"
     first_name = sys.argv[2] if len(sys.argv) > 2 else "siddharth"
     

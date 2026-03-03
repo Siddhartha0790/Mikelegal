@@ -9,8 +9,7 @@ class SubscriberSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         email = validated_data.get('email')
-        # Prevent duplicates properly or just let the unique constraint handle, 
-        # but a custom message is usually better.
+        # prevent duplicates
         if Subscriber.objects.filter(email=email).exists():
             raise serializers.ValidationError({"email": "This email is already subscribed."})
         return super().create(validated_data)
