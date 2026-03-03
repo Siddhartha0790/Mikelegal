@@ -46,3 +46,4 @@ you can also use the `--workers` flag to specify how many concurrent workers sho
 ```bash
 python manage.py send_daily_campaign --workers 10
 ```
+Done
