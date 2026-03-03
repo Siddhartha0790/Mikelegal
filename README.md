@@ -2,6 +2,9 @@
 
 a simple django project for managing subscribers and simulating email campaigns.
 
+## VIDEO WALKTHROUGH OF THE CODE
+https://drive.google.com/file/d/1QDIKvhpkgL6MgzYk0dJl2v79Vh_Cq6Qn/view?usp=sharing
+
 ## features
 - manage subscribers (add/remove) via api
 - manage and post email campaigns via api or django admin
